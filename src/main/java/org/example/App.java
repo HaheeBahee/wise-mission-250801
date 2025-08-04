@@ -41,7 +41,6 @@ public class App {
 
         for (WiseSaying wiseSaying : wiseSayings) {
             System.out.println("%d / %s/ %s".formatted(wiseSaying.id, wiseSaying.saying, wiseSaying.author));
-
         }
     }
 
