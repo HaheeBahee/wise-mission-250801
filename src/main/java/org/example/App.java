@@ -37,32 +37,44 @@ public class App {
 
         String[] commandBits = command.split("=");
 
-        if(commandBits.length <2){
+        if (commandBits.length < 2) {
             System.out.println("번호를 입력해주세요.");
             return;
         }
 
         String idStr = commandBits[1];
         int id = Integer.parseInt(idStr);
-        delete(id);
-        System.out.println("%d번 명언이 삭제되었습니다".formatted(id));
+        boolean result = delete(id);
+        if (result) {
+            System.out.println("%d번 명언이 삭제되었습니다".formatted(id));
+        } else {
+            System.out.println("%d번 명령은 존재하지 않습니다.".formatted(id));
+        }
+
 
     }
-        public void delete(int id){
+
+    public boolean delete(int id) {
 
         int deleteTargetIndex = -1;
 
-        for(int i =0; i < lastIndex; i++){
-            if(wiseSayings[i].id == id){
+        for (int i = 0; i < lastIndex; i++) {
+            if (wiseSayings[i].id == id) {
                 deleteTargetIndex = i;
 
             }
         }
 
-        for(int i = deleteTargetIndex; i < lastIndex; i++){
-            wiseSayings[i] = wiseSayings[i+1];
+        if (deleteTargetIndex == -1) {
+            return false;
+        }
+
+        for (int i = deleteTargetIndex; i < lastIndex; i++) {
+            wiseSayings[i] = wiseSayings[i + 1];
         }
         lastIndex--;
+
+        return true;
     }
 
 
