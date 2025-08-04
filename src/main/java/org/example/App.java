@@ -35,15 +35,28 @@ public class App {
     public void actionList() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
-        for (int i = lastIndex - 1; i >= 0; i--) {
-            WiseSaying target = wiseSayings[i];
 
-            if (target == null) {
-                break;
-            }
+        //처리된 데이터 받기
+        WiseSaying[] wiseSayings = findListDesc();
 
-            System.out.println("%d / %s/ %s".formatted(target.id, target.saying, target.author));
+        for (WiseSaying wiseSaying : wiseSayings) {
+            System.out.println("%d / %s/ %s".formatted(wiseSaying.id, wiseSaying.saying, wiseSaying.author));
+
         }
+    }
+
+    public WiseSaying[] findListDesc() {
+
+        //내림차순으로 반환해주기
+        WiseSaying[] resultList = new WiseSaying[lastIndex];
+        int resultListIndex = 0;
+
+        for (int i = lastIndex - 1; i >= 0; i--) {
+            resultList[resultListIndex] = wiseSayings[i];
+            resultListIndex++;
+        }
+
+        return resultList;
     }
 
     public void actionWrite() {
@@ -54,13 +67,12 @@ public class App {
         String author = sc.nextLine();
 
 
-        write(saying, author);
+        WiseSaying wiseSaying = write(saying, author);
 
-        System.out.println("%d번 명언이 등록되었습니다.".formatted(lastNo));
-
+        System.out.println("%d번 명언이 등록되었습니다.".formatted(wiseSaying.id));
     }
 
-    public void write(String saying, String author) {
+    public WiseSaying write(String saying, String author) {
 
         lastNo++;
         WiseSaying wiseSaying = new WiseSaying(); //객체 생성
@@ -69,6 +81,8 @@ public class App {
         wiseSaying.author = author;
 
         wiseSayings[lastIndex++] = wiseSaying;
+
+        return wiseSaying;
     }
 
 }
