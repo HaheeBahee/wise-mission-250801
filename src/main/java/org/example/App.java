@@ -24,11 +24,45 @@ public class App {
 
                 actionList();
 
+            } else if (command.startsWith("삭제")) {
+                actionDelete(command);
 
             } else if (command.equals("종료")) {
                 break;
             }
         }
+    }
+
+    private void actionDelete(String command) {
+
+        String[] commandBits = command.split("=");
+
+        if(commandBits.length <2){
+            System.out.println("번호를 입력해주세요.");
+            return;
+        }
+
+        String idStr = commandBits[1];
+        int id = Integer.parseInt(idStr);
+        delete(id);
+        System.out.println("%d번 명언이 삭제되었습니다".formatted(id));
+
+    }
+        public void delete(int id){
+
+        int deleteTargetIndex = -1;
+
+        for(int i =0; i < lastIndex; i++){
+            if(wiseSayings[i].id == id){
+                deleteTargetIndex = i;
+
+            }
+        }
+
+        for(int i = deleteTargetIndex; i < lastIndex; i++){
+            wiseSayings[i] = wiseSayings[i+1];
+        }
+        lastIndex--;
     }
 
 
