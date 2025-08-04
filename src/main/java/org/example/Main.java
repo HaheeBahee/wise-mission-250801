@@ -6,8 +6,12 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
+        int lastNo = 0;
+        int lastIndex = 0; //가장 최근 배열의 위치
+
+        WiseSaying[] wiseSayings = new WiseSaying[100];
+
         System.out.println("== 명언 앱 ==");
-        int number = 1;
 
         while (true) {
             System.out.print("명령) ");
@@ -15,18 +19,37 @@ public class Main {
 
             if (command.equals("등록")) {
                 System.out.print("명언: ");
-                sc.nextLine();
+                String saying = sc.nextLine();
                 System.out.print("작가: ");
-                sc.nextLine();
-                System.out.println("%d번 명언이 등록되었습니다.".formatted(number));
-                number++;
+                String author = sc.nextLine();
+
+                lastNo++;
+
+                WiseSaying wiseSaying = new WiseSaying(); //객체 생성
+                wiseSaying.id = lastNo;
+                wiseSaying.saying = saying;
+                wiseSaying.author = author;
+
+                wiseSayings[lastIndex++] = wiseSaying;
+
+                System.out.println("%d번 명언이 등록되었습니다.".formatted(lastNo));
+
+            } else if (command.equals("목록")) {
+                System.out.println("번호 / 작가 / 명언");
+                System.out.println("----------------------");
+                for (int i = 0; i < wiseSayings.length; i++) {
+                    WiseSaying target = wiseSayings[i];
+
+                    if (target == null) {
+                        break;
+                    }
+
+                    System.out.println("%d / %s/ %s".formatted(target.id, target.saying, target.author));
+                }
             } else if (command.equals("종료")) {
                 break;
             }
-
         }
-
-
     }
 }
 
