@@ -27,10 +27,64 @@ public class App {
             } else if (command.startsWith("삭제")) {
                 actionDelete(command);
 
+            } else if (command.startsWith("수정")) {
+                actionModify(command);
+
             } else if (command.equals("종료")) {
                 break;
             }
         }
+    }
+
+    private void actionModify(String command) {
+
+        String[] commandBits = command.split("=");
+
+        if (commandBits.length < 2) {
+            System.out.println("번호를 입력해주세요.");
+            return;
+        }
+
+        String idStr = commandBits[1];
+        int id = Integer.parseInt(idStr);
+
+        int modifyTargetIndex = findIndexById(id);
+
+        if(modifyTargetIndex == -1){
+            System.out.println("%d번 명령은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+
+        WiseSaying modifyTargetWiseSaying = wiseSayings[modifyTargetIndex];
+
+        System.out.println("명언(기존) :) %s".formatted(modifyTargetWiseSaying.saying));
+        System.out.print("명언 : ");
+        String newSaying = sc.nextLine();
+        System.out.println("명언(기존) : %s".formatted(modifyTargetWiseSaying.author));
+        System.out.print("작가 : ");
+        String newAuthor = sc.nextLine();
+
+        modify(modifyTargetWiseSaying, newSaying, newAuthor);
+
+    }
+
+    public void modify(WiseSaying modifyTargetWiseSaying, String newSaying, String newAuthor){
+                modifyTargetWiseSaying.saying = newSaying;
+                modifyTargetWiseSaying.author = newAuthor;
+
+    }
+    //명언 입력 시 저장된 명언의 인덱스 찾기
+    public int findIndexById(int id){
+
+        //저장된 명령의 인덱스 찾으면 해당 인덱스 반환.
+        for (int i = 0; i < lastIndex; i++) {
+            if (wiseSayings[i].id == id) {
+                return i;
+            }
+        }
+        //인덱스 못 찾으면 false 반환
+        return -1;
+
     }
 
     private void actionDelete(String command) {
@@ -54,17 +108,19 @@ public class App {
 
     }
 
+
     public boolean delete(int id) {
 
         int deleteTargetIndex = -1;
 
+        //삭제할 명언의 인덱스 찾음.
         for (int i = 0; i < lastIndex; i++) {
             if (wiseSayings[i].id == id) {
                 deleteTargetIndex = i;
-
+                break;
             }
         }
-
+        //인덱스 못 찾으면 false 반환
         if (deleteTargetIndex == -1) {
             return false;
         }
