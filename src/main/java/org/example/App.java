@@ -1,12 +1,13 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    Scanner sc = new Scanner(System.in);
-    int lastNo = 0;
-    int lastIndex = 0; //가장 최근 배열의 위치
-    WiseSaying[] wiseSayings = new WiseSaying[100];
+    private Scanner sc = new Scanner(System.in);
+    private int lastId = 0;
+    private List<WiseSaying> wiseSayings = new ArrayList<>();
 
     public void run() {
 
@@ -55,7 +56,7 @@ public class App {
             return;
         }
 
-        WiseSaying modifyTargetWiseSaying = wiseSayings[modifyTargetIndex];
+        WiseSaying modifyTargetWiseSaying = wiseSayings.get(modifyTargetIndex);
 
         System.out.println("명언(기존) :) %s".formatted(modifyTargetWiseSaying.getSaying()));
         System.out.print("명언 : ");
@@ -78,8 +79,8 @@ public class App {
     private int findIndexById(int id) {
 
         //저장된 명령의 인덱스 찾으면 해당 인덱스 반환.
-        for (int i = 0; i < lastIndex; i++) {
-            if (wiseSayings[i].getId() == id) {
+        for (int i = 0; i < wiseSayings.size(); i++) {
+            if (wiseSayings.get(i).getId() == id) {
                 return i;
             }
         }
@@ -109,27 +110,14 @@ public class App {
 
     }
 
-
     private boolean delete(int id) {
 
-        int deleteTargetIndex = -1;
+        int deleteTargetIndex = findIndexById(id);
 
-        //삭제할 명언의 인덱스 찾음.
-        for (int i = 0; i < lastIndex; i++) {
-            if (wiseSayings[i].getId() == id) {
-                deleteTargetIndex = i;
-                break;
-            }
-        }
-        //인덱스 못 찾으면 false 반환
         if (deleteTargetIndex == -1) {
             return false;
         }
-
-        for (int i = deleteTargetIndex; i < lastIndex; i++) {
-            wiseSayings[i] = wiseSayings[i + 1];
-        }
-        lastIndex--;
+        wiseSayings.remove(deleteTargetIndex);
 
         return true;
     }
@@ -139,26 +127,17 @@ public class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        //처리된 데이터 받기
-        WiseSaying[] wiseSayings = findListDesc();
+        List<WiseSaying> wiseSayings = findListDesc();
+
 
         for (WiseSaying wiseSaying : wiseSayings) {
             System.out.println("%d / %s/ %s".formatted(wiseSaying.getId(), wiseSaying.getSaying(), wiseSaying.getAuthor()));
         }
     }
 
-    private WiseSaying[] findListDesc() {
+    private List<WiseSaying> findListDesc() {
+        return wiseSayings.reversed();
 
-        //내림차순으로 반환해주기
-        WiseSaying[] resultList = new WiseSaying[lastIndex];
-        int resultListIndex = 0;
-
-        for (int i = lastIndex - 1; i >= 0; i--) {
-            resultList[resultListIndex] = wiseSayings[i];
-            resultListIndex++;
-        }
-
-        return resultList;
     }
 
     private void actionWrite() {
@@ -175,9 +154,9 @@ public class App {
     }
 
     private WiseSaying write(String saying, String author) {
-        lastNo++;
-        WiseSaying wiseSaying = new WiseSaying(lastNo, saying, author);
-        wiseSayings[lastIndex++] = wiseSaying;
+        lastId++;
+        WiseSaying wiseSaying = new WiseSaying(lastId, saying, author);
+        wiseSayings.add(wiseSaying);
         return wiseSaying;
     }
 
