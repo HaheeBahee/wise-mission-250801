@@ -50,17 +50,17 @@ public class App {
 
         int modifyTargetIndex = findIndexById(id);
 
-        if(modifyTargetIndex == -1){
+        if (modifyTargetIndex == -1) {
             System.out.println("%d번 명령은 존재하지 않습니다.".formatted(id));
             return;
         }
 
         WiseSaying modifyTargetWiseSaying = wiseSayings[modifyTargetIndex];
 
-        System.out.println("명언(기존) :) %s".formatted(modifyTargetWiseSaying.saying));
+        System.out.println("명언(기존) :) %s".formatted(modifyTargetWiseSaying.getSaying()));
         System.out.print("명언 : ");
         String newSaying = sc.nextLine();
-        System.out.println("명언(기존) : %s".formatted(modifyTargetWiseSaying.author));
+        System.out.println("명언(기존) : %s".formatted(modifyTargetWiseSaying.getAuthor()));
         System.out.print("작가 : ");
         String newAuthor = sc.nextLine();
 
@@ -68,17 +68,18 @@ public class App {
 
     }
 
-    public void modify(WiseSaying modifyTargetWiseSaying, String newSaying, String newAuthor){
-                modifyTargetWiseSaying.saying = newSaying;
-                modifyTargetWiseSaying.author = newAuthor;
+    private void modify(WiseSaying modifyTargetWiseSaying, String newSaying, String newAuthor) {
+        modifyTargetWiseSaying.setSaying(newSaying);
+        modifyTargetWiseSaying.setAuthor(newAuthor);
 
     }
+
     //명언 입력 시 저장된 명언의 인덱스 찾기
-    public int findIndexById(int id){
+    private int findIndexById(int id) {
 
         //저장된 명령의 인덱스 찾으면 해당 인덱스 반환.
         for (int i = 0; i < lastIndex; i++) {
-            if (wiseSayings[i].id == id) {
+            if (wiseSayings[i].getId() == id) {
                 return i;
             }
         }
@@ -109,13 +110,13 @@ public class App {
     }
 
 
-    public boolean delete(int id) {
+    private boolean delete(int id) {
 
         int deleteTargetIndex = -1;
 
         //삭제할 명언의 인덱스 찾음.
         for (int i = 0; i < lastIndex; i++) {
-            if (wiseSayings[i].id == id) {
+            if (wiseSayings[i].getId() == id) {
                 deleteTargetIndex = i;
                 break;
             }
@@ -134,7 +135,7 @@ public class App {
     }
 
 
-    public void actionList() {
+    private void actionList() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
@@ -142,11 +143,11 @@ public class App {
         WiseSaying[] wiseSayings = findListDesc();
 
         for (WiseSaying wiseSaying : wiseSayings) {
-            System.out.println("%d / %s/ %s".formatted(wiseSaying.id, wiseSaying.saying, wiseSaying.author));
+            System.out.println("%d / %s/ %s".formatted(wiseSaying.getId(), wiseSaying.getSaying(), wiseSaying.getAuthor()));
         }
     }
 
-    public WiseSaying[] findListDesc() {
+    private WiseSaying[] findListDesc() {
 
         //내림차순으로 반환해주기
         WiseSaying[] resultList = new WiseSaying[lastIndex];
@@ -160,7 +161,7 @@ public class App {
         return resultList;
     }
 
-    public void actionWrite() {
+    private void actionWrite() {
 
         System.out.print("명언: ");
         String saying = sc.nextLine();
@@ -170,19 +171,13 @@ public class App {
 
         WiseSaying wiseSaying = write(saying, author);
 
-        System.out.println("%d번 명언이 등록되었습니다.".formatted(wiseSaying.id));
+        System.out.println("%d번 명언이 등록되었습니다.".formatted(wiseSaying.getId()));
     }
 
-    public WiseSaying write(String saying, String author) {
-
+    private WiseSaying write(String saying, String author) {
         lastNo++;
-        WiseSaying wiseSaying = new WiseSaying(); //객체 생성
-        wiseSaying.id = lastNo;
-        wiseSaying.saying = saying;
-        wiseSaying.author = author;
-
+        WiseSaying wiseSaying = new WiseSaying(lastNo, saying, author);
         wiseSayings[lastIndex++] = wiseSaying;
-
         return wiseSaying;
     }
 
