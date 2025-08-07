@@ -3,7 +3,6 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class App {
     private Scanner sc = new Scanner(System.in);
@@ -50,23 +49,23 @@ public class App {
         String idStr = commandBits[1];
         int id = Integer.parseInt(idStr);
 
-        int modifyTargetIndex = findIndexById(id);
+        WiseSaying wiseSaying = findByIdOrNull(id);
 
-        if (modifyTargetIndex == -1) {
+
+        if(wiseSaying == null) {
+
             System.out.println("%d번 명령은 존재하지 않습니다.".formatted(id));
             return;
         }
 
-        WiseSaying modifyTargetWiseSaying = wiseSayings.get(modifyTargetIndex);
-
-        System.out.println("명언(기존) :) %s".formatted(modifyTargetWiseSaying.getSaying()));
+        System.out.println("명언(기존) : %s".formatted(wiseSaying.getSaying()));
         System.out.print("명언 : ");
         String newSaying = sc.nextLine();
-        System.out.println("명언(기존) : %s".formatted(modifyTargetWiseSaying.getAuthor()));
-        System.out.print("작가 : ");
+        System.out.println("작가(기존) : %s".formatted(wiseSaying.getAuthor()));        System.out.print("작가 : ");
         String newAuthor = sc.nextLine();
 
-        modify(modifyTargetWiseSaying, newSaying, newAuthor);
+        modify(wiseSaying, newSaying, newAuthor);
+
 
     }
 
@@ -77,12 +76,12 @@ public class App {
     }
 
     //명언 입력 시 저장된 명언의 인덱스 찾기
-    private int findIndexById(int id) {
-
-        return IntStream.range(0, wiseSayings.size())
-                .filter(i -> wiseSayings.get(i).getId() == id)
+    private WiseSaying findByIdOrNull(int id) {
+        return wiseSayings.stream()
+                .filter(w -> w.getId() == id)
                 .findFirst()
-                .orElse(-1);
+                .orElse(null);
+
 
 
     }
