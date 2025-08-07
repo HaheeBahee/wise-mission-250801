@@ -3,6 +3,7 @@ package org.example;
 import java.util.HashMap;
 import java.util.Map;
 
+//사용자의 명령어에서 행동과 파라미터를 분리하는 클래스
 public class Rq {
 
     private Map<String, String> paramMap;
@@ -43,13 +44,12 @@ public class Rq {
         return actionName;
     }
 
-    public String getParam(String key) {
-        return paramMap.get(key);
+    public String getParam(String key, String defaultValue) {
+        return paramMap.getOrDefault(key, defaultValue);
     }
 
     public int getParamAsInt(String key, int defaultValue) {
-        String value = getParam(key);
-
+        String value = getParam(key, null);
         if(value == null) {
             return defaultValue;
         }
