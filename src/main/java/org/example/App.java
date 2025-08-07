@@ -110,14 +110,8 @@ public class App {
 
     private boolean delete(int id) {
 
-        int deleteTargetIndex = findIndexById(id);
-
-        if (deleteTargetIndex == -1) {
-            return false;
-        }
-        wiseSayings.remove(deleteTargetIndex);
-
-        return true;
+        // removeIf는 가독성이 좋음.
+        return wiseSayings.removeIf(w -> w.getId() == id);
     }
 
 
