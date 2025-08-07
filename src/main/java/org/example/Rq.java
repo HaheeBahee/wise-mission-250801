@@ -1,7 +1,9 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //사용자의 명령어에서 행동과 파라미터를 분리하는 클래스
 public class Rq {
@@ -23,21 +25,15 @@ public class Rq {
 
         String[] queryStringBits = queryString.split("&");
 
-        for (String param : queryStringBits) {
-            String[] paramBits = param.split("=");
-            String key = paramBits[0];
-            String value = null;
-
-            if (paramBits.length > 1) {
-                value = paramBits[1];
-            }
-
-            if (value == null) {
-                continue;
-            }
-
-            paramMap.put(key, value);
-        }
+        paramMap = Arrays.stream(queryStringBits)
+                .map(part -> part.split("="))
+                .filter(bits -> bits.length == 2 && bits[0] != null && bits[1] != null) //[key,value]
+                .collect(
+                        Collectors.toMap(
+                                bits -> bits[0],
+                                bits -> bits[1]
+                        )
+                );
     }
 
     public String getActionName() {
@@ -50,7 +46,7 @@ public class Rq {
 
     public int getParamAsInt(String key, int defaultValue) {
         String value = getParam(key, null);
-        if(value == null) {
+        if (value == null) {
             return defaultValue;
         }
 
