@@ -3,6 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class App {
     private Scanner sc = new Scanner(System.in);
@@ -78,14 +79,11 @@ public class App {
     //명언 입력 시 저장된 명언의 인덱스 찾기
     private int findIndexById(int id) {
 
-        //저장된 명령의 인덱스 찾으면 해당 인덱스 반환.
-        for (int i = 0; i < wiseSayings.size(); i++) {
-            if (wiseSayings.get(i).getId() == id) {
-                return i;
-            }
-        }
-        //인덱스 못 찾으면 false 반환
-        return -1;
+        return IntStream.range(0, wiseSayings.size())
+                .filter(i -> wiseSayings.get(i).getId() == id)
+                .findFirst()
+                .orElse(-1);
+
 
     }
 
