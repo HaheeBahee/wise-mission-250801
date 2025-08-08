@@ -1,8 +1,9 @@
 package org.example.domain.wiseSaying.controller;
 
-import org.example.domain.wiseSaying.Rq;
-import org.example.domain.wiseSaying.Ut;
-import org.example.domain.wiseSaying.WiseSaying;
+import org.example.domain.wiseSaying.golbal.AppContext;
+import org.example.domain.wiseSaying.golbal.Rq;
+import org.example.domain.wiseSaying.golbal.Ut;
+import org.example.domain.wiseSaying.entity.WiseSaying;
 import org.example.domain.wiseSaying.service.WiseSayingService;
 
 import java.util.List;
@@ -11,13 +12,10 @@ import java.util.Scanner;
 public class WiseSayingController {
 
     private Scanner sc;
-
+    WiseSayingService wiseSayingService = AppContext.wiseSayingService;
     public WiseSayingController(Scanner sc) {
         this.sc = sc;
     }
-    WiseSayingService wiseSayingService = new WiseSayingService();
-
-
     public void actionModify(Rq rq) {
 
         int id = rq.getParamAsInt("id", -1);

@@ -2,19 +2,17 @@ package org.example.domain.wiseSaying;
 
 import org.example.domain.wiseSaying.controller.SystemController;
 import org.example.domain.wiseSaying.controller.WiseSayingController;
+import org.example.domain.wiseSaying.golbal.AppContext;
+import org.example.domain.wiseSaying.golbal.Rq;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
 
-    private Scanner sc = new Scanner(System.in);
-    private int lastId = 0;
-    private List<WiseSaying> wiseSayings = new ArrayList<>();
-    private SystemController systemController = new SystemController();
-    private WiseSayingController wiseSayingController = new WiseSayingController(sc);
+    private Scanner sc = AppContext.sc;
 
+    private SystemController systemController = AppContext.systemController;
+    private WiseSayingController wiseSayingController = AppContext.wiseSayingController;
     public void run() {
 
         System.out.println("== 명언 앱 ==");

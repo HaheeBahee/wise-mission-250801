@@ -1,14 +1,14 @@
 package org.example.domain.wiseSaying.service;
 
-import org.example.domain.wiseSaying.WiseSaying;
+import org.example.domain.wiseSaying.entity.WiseSaying;
+import org.example.domain.wiseSaying.golbal.AppContext;
 import org.example.domain.wiseSaying.repository.WiseSayingRepository;
 
 import java.util.List;
 
 public class WiseSayingService {
 
-    private WiseSayingRepository wiseSayingRepository = new WiseSayingRepository();
-
+    private WiseSayingRepository wiseSayingRepository = AppContext.wiseSayingRepository;
 
     public void modify(WiseSaying wiseSaying, String newSaying, String newAuthor) {
         wiseSaying.setSaying(newSaying);

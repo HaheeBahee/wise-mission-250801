@@ -1,4 +1,4 @@
-package org.example.domain.wiseSaying;
+package org.example.domain.wiseSaying.golbal;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

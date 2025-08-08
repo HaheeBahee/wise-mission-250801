@@ -1,4 +1,4 @@
-package org.example.domain.wiseSaying;
+package org.example.domain.wiseSaying.golbal;
 
 import java.util.Arrays;
 import java.util.HashMap;
