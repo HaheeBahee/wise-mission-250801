@@ -7,18 +7,18 @@ import java.util.List;
 
 public class WiseSayingService {
 
-    private int lastId = 0;
     private WiseSayingRepository wiseSayingRepository = new WiseSayingRepository();
 
-    //재료 가공 - 요리 - 서비스
+
     public void modify(WiseSaying wiseSaying, String newSaying, String newAuthor) {
         wiseSaying.setSaying(newSaying);
         wiseSaying.setAuthor(newAuthor);
+
+        wiseSayingRepository.save(wiseSaying);
     }
 
     public WiseSaying write(String saying, String author) {
-        lastId++;
-        WiseSaying wiseSaying = new WiseSaying(lastId, saying, author);
+        WiseSaying wiseSaying = new WiseSaying(0, saying, author);
         wiseSayingRepository.save(wiseSaying);
         return wiseSaying;
     }

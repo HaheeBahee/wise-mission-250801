@@ -7,6 +7,7 @@ import java.util.List;
 
 public class WiseSayingRepository {
     private List<WiseSaying> wiseSayings = new ArrayList<>();
+    private int lastId = 0;
 
 
     public WiseSaying findByIdOrNull(int id) {
@@ -18,9 +19,17 @@ public class WiseSayingRepository {
         return wiseSayings.removeIf(w -> w.getId() == id);
     }
 
-    public void save(WiseSaying wiseSaying){
-        wiseSayings.add(wiseSaying);
+    public WiseSaying save(WiseSaying wiseSaying){
+
+        //새로운 명언 혹은 기존 명언
+        if(wiseSaying.isNew()){
+            lastId++;
+            wiseSaying.setId(lastId);
+            wiseSayings.add(wiseSaying);
+        }
+        return wiseSaying;
     }
+
     public List<WiseSaying> findListDesc() {
         return wiseSayings.reversed();
     }
