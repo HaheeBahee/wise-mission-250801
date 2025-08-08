@@ -1,6 +1,7 @@
 package org.example.domain.wiseSaying.controller;
 
 import org.example.domain.wiseSaying.Rq;
+import org.example.domain.wiseSaying.Ut;
 import org.example.domain.wiseSaying.WiseSaying;
 import org.example.domain.wiseSaying.service.WiseSayingService;
 
@@ -54,13 +55,16 @@ public class WiseSayingController {
 
 
     public void actionList() {
-        System.out.println("번호 / 작가 / 명언");
+        System.out.println("번호 / 작가 / 명언 / 작성날짜 / 수정날짜 ");
         System.out.println("----------------------");
 
         List<WiseSaying> wiseSayings = wiseSayingService.findListDesc();
 
         for (WiseSaying wiseSaying : wiseSayings) {
-            System.out.println("%d / %s / %s / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getSaying(), wiseSaying.getAuthor(), wiseSaying.getCreatedDate(), wiseSaying.getModifiedDate()));
+            System.out.println("%d / %s / %s / %s / %s".formatted(wiseSaying.getId(),
+                    wiseSaying.getSaying(), wiseSaying.getAuthor(),
+                    Ut.getFormattedDate(wiseSaying.getCreatedDate()),
+                    Ut.getFormattedDate(wiseSaying.getModifiedDate())));
         }
     }
 
