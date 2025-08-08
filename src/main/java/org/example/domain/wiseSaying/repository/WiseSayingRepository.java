@@ -25,7 +25,11 @@ public class WiseSayingRepository {
         if(wiseSaying.isNew()){
             lastId++;
             wiseSaying.setId(lastId);
+            wiseSaying.setCreatedDate(java.time.LocalDateTime.now());
+            wiseSaying.setModifiedDate(java.time.LocalDateTime.now());
             wiseSayings.add(wiseSaying);
+        }else{
+            wiseSaying.setModifiedDate(java.time.LocalDateTime.now());
         }
         return wiseSaying;
     }

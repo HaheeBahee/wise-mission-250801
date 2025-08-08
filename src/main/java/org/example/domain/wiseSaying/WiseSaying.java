@@ -1,9 +1,13 @@
 package org.example.domain.wiseSaying;
 
+import java.time.LocalDateTime;
+
 public class WiseSaying {
     private int id = 0;
     private String saying;
     private String author;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     public WiseSaying (int id, String saying, String author){
         this.id = id;
@@ -15,6 +19,21 @@ public class WiseSaying {
         return id == 0;
     }
 
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
     public int getId() {
         return id;

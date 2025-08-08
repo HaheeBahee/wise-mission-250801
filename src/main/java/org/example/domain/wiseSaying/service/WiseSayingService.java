@@ -14,6 +14,7 @@ public class WiseSayingService {
         wiseSaying.setSaying(newSaying);
         wiseSaying.setAuthor(newAuthor);
 
+
         wiseSayingRepository.save(wiseSaying);
     }
 
