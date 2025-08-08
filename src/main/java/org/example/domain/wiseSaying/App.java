@@ -1,4 +1,6 @@
-package org.example;
+package org.example.domain.wiseSaying;
+
+import org.example.domain.wiseSaying.controller.SystemController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ public class App {
     private Scanner sc = new Scanner(System.in);
     private int lastId = 0;
     private List<WiseSaying> wiseSayings = new ArrayList<>();
+    private SystemController  systemController = new SystemController();
 
 
     public void run() {
@@ -36,6 +39,9 @@ public class App {
 
 
             } else if (actionName.equals("종료")) {
+                systemController.exit();
+
+
                 break;
             }
         }
